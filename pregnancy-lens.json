@@ -42,6 +42,32 @@
             "valueString": "Lente para el embarazo"
           }
         ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "pt"
+          },
+          {
+            "url": "content",
+            "valueString": "Lente para a gravidez"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "da"
+          },
+          {
+            "url": "content",
+            "valueString": "Linse til graviditet"
+          }
+        ]
       }
     ]
   },
@@ -58,6 +84,32 @@
           {
             "url": "content",
             "valueString": "Lente para el embarazo"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "pt"
+          },
+          {
+            "url": "content",
+            "valueString": "Lente para a gravidez"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "da"
+          },
+          {
+            "url": "content",
+            "valueString": "Linse til graviditet"
           }
         ]
       }
@@ -93,6 +145,32 @@
             "valueString": "Lente que resalta o colapsa la información relacionada con el embarazo"
           }
         ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "pt"
+          },
+          {
+            "url": "content",
+            "valueString": "Lente que destaca ou colapsa a informação relacionada com a gravidez"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "da"
+          },
+          {
+            "url": "content",
+            "valueString": "Linse der fremhæver eller skjuler information relateret til graviditet"
+          }
+        ]
       }
     ]
   },
@@ -100,7 +178,7 @@
     {
       "coding": [
         {
-          "code": "US",
+          "code": "EU",
           "system": "urn:iso:std:iso:3166"
         }
       ]
@@ -121,6 +199,32 @@
             "valueString": "Colapsar o resaltar la información relacionada con el embarazo en un ePI preprocesado."
           }
         ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "pt"
+          },
+          {
+            "url": "content",
+            "valueString": "Colapsar ou destacar informações relacionadas com a gravidez em uma ePI pré-processada."
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "da"
+          },
+          {
+            "url": "content",
+            "valueString": "Skjul eller fremhæv graviditetsrelaterede oplysninger i en forbehandlet ePI."
+          }
+        ]
       }
     ]
   },
@@ -137,6 +241,32 @@
           {
             "url": "content",
             "valueString": "Puedes importar esta lente directamente a tu servidor FHIR que soporte el tipo de recurso Library."
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "pt"
+          },
+          {
+            "url": "content",
+            "valueString": "Podes importar esta lente diretamente para o teu servidor FHIR que suporte o tipo de recurso Library."
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "da"
+          },
+          {
+            "url": "content",
+            "valueString": "Du kan importere denne linse direkte til din FHIR-server, som understøtter ressource-typen Library."
           }
         ]
       }
@@ -167,6 +297,32 @@
               {
                 "url": "content",
                 "valueString": "Lente para el embarazo"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "pt"
+              },
+              {
+                "url": "content",
+                "valueString": "Lente para a gravidez"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "da"
+              },
+              {
+                "url": "content",
+                "valueString": "Linse til graviditet"
               }
             ]
           }
