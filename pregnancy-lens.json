@@ -23,7 +23,7 @@
   "identifier": [
     {
       "system": "http://gravitate-health.lst.tfo.upm.es",
-      "value": "Pregnancy Lens"
+      "value": "pregnancy-lens"
     }
   ],
   "version": "0.0.1",
