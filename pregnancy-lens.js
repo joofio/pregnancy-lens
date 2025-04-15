@@ -69,8 +69,7 @@ let getIPSAge = (birthDate) => {
 let enhance = async () => {
     //                  pregnancyCategory    breastfeedingCategory
     //                             SNOMED    SNOMED
-    let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //"contra-indication-pregancy"]
-
+    let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //What to look in the extensions to find tag/class
     // Get IPS gender and check if is female
     let gender;
 
@@ -82,14 +81,14 @@ let enhance = async () => {
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
-            if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75) {
+            if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75 || getIPSAge(element.resource.birthDate) < 14) {
                 enhanceTag = "collapsed";
             } else {
                 enhanceTag = "highlight";
             }
         }
     });
-
+    console.log(enhanceTag);
     // ePI traslation from terminology codes to their human redable translations in the sections
     let compositions = 0;
     let categories = [];
