@@ -78,14 +78,79 @@ let enhance = async () => {
     if (ips == "" || ips == null) {
         throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
     }
+    let pregnancyStatus = {
+        childbearingAge: true,  // Assuming always true for now
+        pregnant: false,
+        breastfeeding: false
+    };
+    
+    // original, just using age
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
             if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75 || getIPSAge(element.resource.birthDate) < 14) {
-                enhanceTag = "collapsed";
+                pregnancyStatus.childbearingAge = false;
+             //   enhanceTag = "collapsed";
             } else {
-                enhanceTag = "highlight";
+                pregnancyStatus.childbearingAge = true;
+
+               // enhanceTag = "highlight";
             }
+        }
+    });
+
+    // check IPS for pregnancy status
+    //        "display" : "Pregnancy status" - check  "valueCodeableConcept"
+    //        "display" : "[#] Births total" - check valueQuantity
+    //        "display" : "Delivery date Estimated" - check valueDatetime
+
+
+
+    const now = new Date();
+    const twoYearsAgo = new Date();
+    twoYearsAgo.setFullYear(now.getFullYear() - 2);
+    
+    const tenMonthsFromNow = new Date();
+    tenMonthsFromNow.setMonth(now.getMonth() + 10);
+    
+    ips.entry.forEach((entry) => {
+        const resource = entry.resource;
+    
+        if (resource.resourceType === "Observation" && resource.code?.coding) {
+            resource.code.coding.forEach((coding) => {
+                const loincCode = coding.code;
+    
+                // Check for valueDateTime (e.g. 11778-8 or other future/breastfeeding)
+                if (loincCode === "11778-8" && resource.valueDateTime) {
+                    const valueDate = new Date(resource.valueDateTime);
+    
+                    if (valueDate > now && valueDate <= tenMonthsFromNow) {
+                        pregnancyStatus.pregnant = true;
+                    }
+    
+                    if (valueDate < now && valueDate >= twoYearsAgo) {
+                        pregnancyStatus.breastfeeding = true;
+                    }
+                }
+    
+                // Check pregnancy status via valueCodeableConcept
+                if (loincCode === "82810-3" && resource.valueCodeableConcept?.coding) {
+                    resource.valueCodeableConcept.coding.forEach((coding) => {
+                        const code = coding.code;
+    
+                        const positivePregnancyCodes = ["77386006", "146799005", "152231000119106"];
+                        const negativePregnancyCodes = ["60001007"];
+    
+                        if (positivePregnancyCodes.includes(code)) {
+                            pregnancyStatus.pregnant = true;
+                        }
+    
+                        if (negativePregnancyCodes.includes(code)) {
+                            pregnancyStatus.pregnant = false;
+                        }
+                    });
+                }
+            });
         }
     });
     console.log(enhanceTag);
@@ -97,7 +162,7 @@ let enhance = async () => {
             compositions++;
             //Iterated through the Condition element searching for conditions
             entry.resource.extension.forEach((element) => {
-                
+
                 // Check if the position of the extension[1] is correct
                 if (element.extension[1].url == "concept") {
                     // Search through the different terminologies that may be avaible to check in the condition
@@ -117,6 +182,16 @@ let enhance = async () => {
             });
         }
     });
+
+    // decide tag - currently as was:
+    if (pregnancyStatus.childbearingAge == false){
+        enhanceTag="collapse";
+    }
+    else{
+        enhanceTag="highlight";
+
+    }
+
 
     if (compositions == 0) {
         throw new Error('Bad ePI: no category "Composition" found');
