@@ -72,7 +72,6 @@ let enhance = async () => {
     let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //What to look in the extensions to find tag/class
     // Get IPS gender and check if is female
     let gender;
-
     let enhanceTag;
 
     if (ips == "" || ips == null) {
@@ -202,10 +201,11 @@ let enhance = async () => {
         return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
-    return await annotateHTMLsection(categories, enhanceTag);
+    return await {"content":annotateHTMLsection(categories, enhanceTag),"explanation_data":pregnancyStatus};
 };
 
 return {
-    enhance: enhance,
+    enhance: enhance["content"],
+    explanation_data:enhance["explanation_data"],
     getSpecification: getSpecification,
 };
