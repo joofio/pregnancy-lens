@@ -72,7 +72,6 @@ let enhance = async () => {
     let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //What to look in the extensions to find tag/class
     // Get IPS gender and check if is female
     let gender;
-
     let enhanceTag;
 
     if (ips == "" || ips == null) {
@@ -83,18 +82,17 @@ let enhance = async () => {
         pregnant: false,
         breastfeeding: false
     };
-    
+
     // original, just using age
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
             if (gender != "female" || getIPSAge(element.resource.birthDate) >= 60 || getIPSAge(element.resource.birthDate) < 14) {
                 pregnancyStatus.childbearingAge = false;
-             //   enhanceTag = "collapsed";
+                enhanceTag = "collapsed";
             } else {
                 pregnancyStatus.childbearingAge = true;
-
-               // enhanceTag = "highlight";
+                enhanceTag = "highlight";
             }
         }
     });
@@ -109,42 +107,42 @@ let enhance = async () => {
     const now = new Date();
     const twoYearsAgo = new Date();
     twoYearsAgo.setFullYear(now.getFullYear() - 2);
-    
+
     const tenMonthsFromNow = new Date();
     tenMonthsFromNow.setMonth(now.getMonth() + 10);
-    
+
     ips.entry.forEach((entry) => {
         const resource = entry.resource;
-    
+
         if (resource.resourceType === "Observation" && resource.code?.coding) {
             resource.code.coding.forEach((coding) => {
                 const loincCode = coding.code;
-    
+
                 // Check for valueDateTime (e.g. 11778-8 or other future/breastfeeding)
                 if (loincCode === "11778-8" && resource.valueDateTime) {
                     const valueDate = new Date(resource.valueDateTime);
-    
+
                     if (valueDate > now && valueDate <= tenMonthsFromNow) {
                         pregnancyStatus.pregnant = true;
                     }
-    
+
                     if (valueDate < now && valueDate >= twoYearsAgo) {
                         pregnancyStatus.breastfeeding = true;
                     }
                 }
-    
+
                 // Check pregnancy status via valueCodeableConcept
                 if (loincCode === "82810-3" && resource.valueCodeableConcept?.coding) {
                     resource.valueCodeableConcept.coding.forEach((coding) => {
                         const code = coding.code;
-    
+
                         const positivePregnancyCodes = ["77386006", "146799005", "152231000119106"];
                         const negativePregnancyCodes = ["60001007"];
-    
+
                         if (positivePregnancyCodes.includes(code)) {
                             pregnancyStatus.pregnant = true;
                         }
-    
+
                         if (negativePregnancyCodes.includes(code)) {
                             pregnancyStatus.pregnant = false;
                         }
@@ -184,11 +182,11 @@ let enhance = async () => {
     });
 
     // decide tag - currently as was:
-    if (pregnancyStatus.childbearingAge == false){
-        enhanceTag="collapse";
+    if (pregnancyStatus.childbearingAge == false) {
+        enhanceTag = "collapse";
     }
-    else{
-        enhanceTag="highlight";
+    else {
+        enhanceTag = "highlight";
 
     }
 
@@ -202,10 +200,17 @@ let enhance = async () => {
         return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
-    return await annotateHTMLsection(categories, enhanceTag);
+    const content = await annotateHTMLsection(categories, enhanceTag);
+
+    return {
+        content: content,
+        explanation_data: pregnancyStatus
+    };
+
+
 };
 
 return {
     enhance: enhance,
-    getSpecification: getSpecification,
+    getSpecification: getSpecification
 };
