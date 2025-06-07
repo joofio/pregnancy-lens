@@ -87,13 +87,12 @@ let enhance = async () => {
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
-            if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75 || getIPSAge(element.resource.birthDate) < 14) {
+            if (gender != "female" || getIPSAge(element.resource.birthDate) >= 60 || getIPSAge(element.resource.birthDate) < 14) {
                 pregnancyStatus.childbearingAge = false;
-                //   enhanceTag = "collapsed";
+                enhanceTag = "collapsed";
             } else {
                 pregnancyStatus.childbearingAge = true;
-
-                // enhanceTag = "highlight";
+                enhanceTag = "highlight";
             }
         }
     });
@@ -213,6 +212,5 @@ let enhance = async () => {
 
 return {
     enhance: enhance,
-    
     getSpecification: getSpecification
 };
