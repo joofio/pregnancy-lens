@@ -8,6 +8,14 @@ let getSpecification = () => {
     return "1.0.0";
 };
 
+let pregnancyStatus = {
+        childbearingAge: true,  // Assuming always true for now
+        pregnant: false,
+        breastfeeding: false
+    };
+
+let report = "you are seeing this because you are of childbearing age.";
+
 let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
@@ -77,12 +85,9 @@ let enhance = async () => {
     if (ips == "" || ips == null) {
         throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
     }
-    let pregnancyStatus = {
-        childbearingAge: true,  // Assuming always true for now
-        pregnant: false,
-        breastfeeding: false
-    };
 
+
+//    var report="you are seeing this because you are of childbearing age.";
     // original, just using age
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
@@ -181,6 +186,7 @@ let enhance = async () => {
         }
     });
 
+    console.log(pregnancyStatus);
     // decide tag - currently as was:
     if (pregnancyStatus.childbearingAge == false) {
         enhanceTag = "collapse";
@@ -200,17 +206,14 @@ let enhance = async () => {
         return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
-    const content = await annotateHTMLsection(categories, enhanceTag);
-
-    return {
-        content: content,
-        explanation_data: pregnancyStatus
-    };
-
-
+    return await annotateHTMLsection(categories, enhanceTag);
+    
 };
 
 return {
     enhance: enhance,
-    getSpecification: getSpecification
+    getSpecification: getSpecification,
+    explanation: pregnancyStatus,
+    report: report
 };
+

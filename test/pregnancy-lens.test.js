@@ -45,10 +45,10 @@ describe("Pregnancy Annotation Script (non-invasive)", () => {
   });
 
   test('should include pregnancy status in explanation data', async () => {
-    const result = await annotation.enhance();
-    expect(result.explanation_data).toHaveProperty('childbearingAge');
-    expect(typeof result.explanation_data.childbearingAge).toBe('boolean');
-});
+    const pregnancyStatus = await annotation.explanation;
+    expect(pregnancyStatus).toHaveProperty('childbearingAge');
+    expect(typeof pregnancyStatus.childbearingAge).toBe('boolean');
+  });
 
   test("should return enhanced HTML containing highlight class", async () => {
     const result = await annotation.enhance();
@@ -61,10 +61,10 @@ describe("Pregnancy Annotation Script (non-invasive)", () => {
 
     // Save result to file
     const outputPath = path.join(outputDir, "enhanced.html");
-    fs.writeFileSync(outputPath, result.content, "utf-8");
+    fs.writeFileSync(outputPath, result, "utf-8");
 
     console.log(`✅ Enhanced HTML saved to: ${outputPath}`);
 
-    expect(result.content).toContain("pregnancy-lens");
+    expect(result).toContain("pregnancy-lens");
   });
 });
