@@ -210,10 +210,20 @@ let enhance = async () => {
     
 };
 
+
+let explanationfunction = async () =>{
+    return explanation;
+};
+
+
+let reportfunction = async () =>{
+    return report;
+};
+
 return {
     enhance: enhance,
     getSpecification: getSpecification,
-    explanation: pregnancyStatus,
-    report: report
+    explanation: explanationfunction,
+    report: reportfunction
 };
 
