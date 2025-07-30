@@ -1,0 +1,19 @@
+{
+  "resourceType": "Bundle",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "gender": "female",
+        "birthDate": "1995-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "code": { "coding": [{ "code": "82810-3" }] },
+        "valueCodeableConcept": { "coding": [{ "code": "77386006" }] }
+      }
+    }
+  ]
+}

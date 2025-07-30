@@ -1,0 +1,12 @@
+{
+  "resourceType": "Bundle",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "gender": "female",
+        "birthDate": "1940-01-01"
+      }
+    }
+  ]
+}
